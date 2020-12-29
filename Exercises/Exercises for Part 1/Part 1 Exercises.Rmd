@@ -1,0 +1,68 @@
+---
+title: "Part 1 Exercises"
+author: "Brian Baglow"
+date: "27/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Part 1 Exercises
+This is an R Markdown document with the exercises for Part 1 of the Intro to R & Data Visualisation module.
+#Exercise 1 - Create an R Markdown document that exports to HTML.
+
+```{r}
+#Exercise 2 - experiment with scale_colour_*()
+library(dplyr)
+library(ggplot2)
+#filter dataset to limit it to a single year
+storms = filter(storms, year == 2015)
+ggplot(storms, aes(x = wind, y = pressure, colour = name)) +
+  geom_point() +
+  geom_path() +
+  scale_colour_discrete()
+```
+
+I played around with a variety of scale_colour options to see if I could improve on the default option. But this seems to be the clearest and most aesthetically pleasing.
+
+Several would not provide out, since they are looking for continuous data, so return errors.
+
+A couple, like Brewer, do work, but return narrower colour bands and truncate the data, because there's too much of it. I clearly need to look into that in more detail.
+
+some options return very similar results, with Discrete and Hue being nearly indistinguishable. 
+
+# Exercise 3 - nycflights13
+
+```{r}
+#Exercise 3 - plot different variables using nycflights13
+library(nycflights13)
+select(flights, origin, dep_delay, carrier)
+ggplot(flights, aes(x = carrier, y = dep_delay, colour = origin)) +
+   geom_point()
+  
+  
+```
+
+This is a work in progress. I'm still trying to work out how to show the airport and carrier with the worst delays, so you can determine which combination will most likely cause you problems. Not entirely happy with this, but I'm going to move on, as I feel I'm a little behind. I will come back and play with this some more as time permits.
+
+```{r}
+# Exercise 4 - pick a dataset and use facet_wrap() or patchwork
+diamonds
+slice(diamonds, 1:100)
+d1 <- ggplot(diamonds, aes(x = carat, y = price, colour = color)) +
+  geom_point()
+d2 <- ggplot (diamonds, aes(x = price, y = cut, colour = color)) +
+  geom_point()
+d3 <- ggplot (diamonds, aes(x = color, y = price, colour = carat)) +
+   geom_point() + 
+   scale_colour_continuous()
+library(patchwork)
+d1 + d2 + d3
+```
+I revisited this exercise after doing the dplyr tutorial and am a little happier with my ability to ask questions and use the data to answer them. Having said that, I know the above graphs are not ideal. But I am fascinated by being able to produce different results. Ideally, I'd like one graph which has x = carat, y = price and then has geom_line() for color and cut, to try and bring everything together. 
+
+However, having spent a whole morning enjoying playing with this, I am going to stop here and revisit once my skills are a little more familiar.
+
+Brian

@@ -1,0 +1,31 @@
+---
+title: "Exercises For Part 1"
+author: "Brian Baglow"
+date: "27/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exercises for UI111024 - Intro To R & Data Visualisation
+
+These are the exercises for Part 1 of the Intro to R & Data Visualisation course from UHI
+
+```{r}
+# Load package for storms dataset
+library(ggplot2)
+library(dplyr)
+storms = filter(storms, year == 2015) # more on this in Part 2
+ggplot(storms, aes(x = wind, y = pressure, colour = name)) +
+  scale_colour_discrete() +
+  geom_point() +
+  geom_path() 
+  
+```
+Many of the scale_colour_* options, such as *** would not work with the above dataset as they 
+
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

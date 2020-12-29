@@ -1,0 +1,85 @@
+---
+title: "Exercises for Part 2"
+author: "Brian Baglow"
+date: "22/12/2020"
+output: html_document
+---
+##Exercise 1
+```{r}
+# Load the tidyverse library rather than multiple individual libraries
+library(tidyverse)
+
+# Select only those columns from the dataset which are numeric
+select (storms, where(is.numeric))
+```
+
+
+```{r}
+# Select only those columns from the dataset which contain character/string data
+select(storms, where(is.character))
+```
+
+```{r}
+# Select only those columns which contain the letter "e"
+select(storms, contains("o"))
+```
+
+##Exercise 2
+
+```{r}
+# Change all columns to character/string data
+mutate(storms, across(everything(), as.character))
+```
+
+
+```{r}
+# Change ONLY the numeric columns to character data using where()
+mutate(storms, across(where(is.numeric), as.character))
+```
+
+##Exercise 3
+
+```{r}
+# Count the number of storms using the count() function
+# Arrange the data by the number of storms to find the year with the most
+number_storms <- count(storms, year)
+arrange(number_storms, desc(n))
+
+```
+
+## Exercise 4
+
+```{r}
+# Combining select() and filter() using storms
+
+#filter a single storm based upon name and year
+storm_Belle <- filter(storms, name == "Belle", year == 1976)
+
+# select only the name, wind, pressure and category columns
+select(storm_Belle, name, wind, pressure, category)
+
+# plot the wind on the x-axis and pressure on the y-axis
+ggplot(storm_Belle, aes(x = wind, y = pressure, colour = "category")) +
+# add both points and lines  
+  geom_point() +
+  geom_line()
+
+```
+
+```{r}
+# Add more storms to the above exercise. I'm using everything in 1976
+
+#filter a single storm based upon year
+storms_76 <- filter(storms, year == 1976)
+
+# select only the name, wind, pressure and category columns
+select(storms_76, name, wind, pressure, category)
+
+# plot the wind on the x-axis and pressure on the y-axis, colour each by category
+ggplot(storms_76, aes(x = wind, y = pressure, colour = category)) +
+# add both points and lines  
+  geom_point() +
+  geom_line()
+```
+
+
